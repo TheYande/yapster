@@ -1,3 +1,18 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  background-color: #1e1e1e;
+  color: #dcdcdc;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -10,14 +25,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #1e1e1e;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #e0e0e0;
 }
 
 .App-link {
@@ -38,21 +53,22 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background: #282c34;
-  color: white;
+  background: #1e1e1e;
+  color: #e0e0e0;
 }
 
 .messages {
   max-width: 500px;
   margin: 20px auto;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #333;
   border-radius: 5px;
-  background: #f9f9f9;
+  background: #242424;
 }
 
 .message {
   margin-bottom: 10px;
+  color: #e0e0e0;
 }
 
 form {
@@ -65,8 +81,10 @@ input {
   width: 300px;
   padding: 10px;
   margin-right: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #333;
   border-radius: 5px;
+  background: #333;
+  color: #e0e0e0;
 }
 
 button {
@@ -75,4 +93,5 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  color: #121212;
 }
