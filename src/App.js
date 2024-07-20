@@ -1,7 +1,15 @@
 // src/App.js
 import React, { useState, useEffect } from "react";
-import firebase from "firebase/app";
 import { auth, firestore } from "./firebase";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import {
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp,
+} from "firebase/firestore";
 import "./App.css";
 
 const App = () => {
@@ -10,29 +18,29 @@ const App = () => {
   const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    const unsubscribeAuth = auth.onAuthStateChanged((user) => {
       setUser(user);
     });
 
-    firestore
-      .collection("messages")
-      .orderBy("createdAt")
-      .onSnapshot((snapshot) => {
-        const msgs = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setMessages(msgs);
-      });
+    const q = query(collection(firestore, "messages"), orderBy("createdAt"));
+    const unsubscribeMessages = onSnapshot(q, (snapshot) => {
+      const msgs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setMessages(msgs);
+    });
+
+    return () => {
+      unsubscribeAuth();
+      unsubscribeMessages();
+    };
   }, []);
 
   const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider);
   };
 
-  const signOut = () => {
-    auth.signOut();
+  const signOutUser = () => {
+    signOut(auth);
   };
 
   const sendMessage = async (e) => {
@@ -40,9 +48,9 @@ const App = () => {
 
     if (newMessage.trim() === "") return;
 
-    await firestore.collection("messages").add({
+    await addDoc(collection(firestore, "messages"), {
       text: newMessage,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: serverTimestamp(),
       uid: user.uid,
       displayName: user.displayName,
     });
@@ -55,7 +63,7 @@ const App = () => {
       <header>
         <h1>Chat App</h1>
         {user ? (
-          <button onClick={signOut}>Sign Out</button>
+          <button onClick={signOutUser}>Sign Out</button>
         ) : (
           <button onClick={signInWithGoogle}>Sign In with Google</button>
         )}

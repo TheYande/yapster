@@ -1,18 +1,19 @@
 // src/firebase.js
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyD28R4Bqn8fxygXfOgFgUVWfst3Yg511po",
+  authDomain: "yapster-d60ee.firebaseapp.com",
+  projectId: "yapster-d60ee",
+  storageBucket: "yapster-d60ee.appspot.com",
+  messagingSenderId: "175338596069",
+  appId: "1:175338596069:web:dc41c40983e43ebe2a560c",
+  measurementId: "G-88N232T5SN",
 };
 
-firebase.initializeApp(firebaseConfig);
-
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const firestore = getFirestore(app);
